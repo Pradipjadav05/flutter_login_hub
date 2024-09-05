@@ -1,18 +1,18 @@
-# api_service_helper
+# flutter_login_hub
 
-ApiServices for making HTTP requests using the Dio package in a Flutter application. It supports various HTTP methods (GET, POST, PUT, DELETE) and provides flexibility for passing data, query parameters, authentication tokens, and progress callbacks. The class encapsulates the request logic and handles errors, including debugging through debugPrint. This code promotes code reusability and maintainability when interacting with APIs in a Flutter app.
+Flutter Login Hub is a customizable form-based UI widget designed for user login and registration processes. It provides a simple and flexible way to create login forms with a variety of input fields, form validation, and user interactions. The widget is highly configurable, supports different field types like text, email, password, and mobile numbers, and includes features like password visibility toggling, form validation, and a "Remember Me" option.
 
 
 ## Features
 
-- HTTP Request Handling: The class facilitates making HTTP requests (GET, POST, PUT, DELETE) to remote APIs using the Dio package.
-- Flexibility: It allows sending data, query parameters, and an optional authentication token with each request.
-- Progress Tracking: Supports tracking the progress of data upload and download with onSendProgress and onReceiveProgress callbacks.
-- Error Handling: Catches and handles errors during the request process and provides debugging information using debugPrint.
-- Reusable Code: Encapsulates HTTP request logic into a single class, promoting code reusability and maintainability in a Flutter application.
-- Header Management: Automatically sets the 'Content-Type' header to 'application/json' and adds an 'Authorization' header if an authentication token is provided.
-- Cancelation Support: Allows canceling ongoing requests using the provided cancelToken.
-- Versatility: Supports various HTTP methods, making it suitable for different API interactions.
+* Customizable input fields (e.g., text, mobile, email, password)
+* Form validation with custom rules
+* Password visibility toggling
+* "Remember Me" checkbox
+* Dynamic field creation based on configuration
+* Optional logo/image display
+* Works for both login and registration flows
+* Easy customization for UI elements such as buttons and text styles
 
 
 ## Getting started
@@ -38,12 +38,6 @@ Super simple to use:
     import 'package:flutter_login_hub/flutter_login_hub.dart';
 ```
 
-
-- Initialize an instance of ApiServices with a base URL.
-
-```dart
-    ApiServices myServices = ApiServices(baseUrl: "https://jsonplaceholder.typicode.com");
-```
 ## Examples
 
 ```dart
