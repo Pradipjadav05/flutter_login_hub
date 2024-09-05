@@ -44,13 +44,27 @@ class LoginScreen extends StatelessWidget {
             hintText: "Enter username",
             fieldType: WidgetType.username,
             label: "Username",
+            validator: (value) {
+              if (value.isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please enter Username')),);
+                return false;
+              }
+              return true;
+            },
           ),
           "Mobile No.": WidgetModel(
             hintText: "Enter Mobile No.",
             fieldType: WidgetType.mobile,
             label: "Mobile",
+            validator: (value) {
+              if (value.isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please enter Password')),);
+                return false;
+              }
+              return true;
+            },
           ),
-          "Email": WidgetModel(
+         /* "Email": WidgetModel(
             hintText: "Enter email",
             fieldType: WidgetType.email,
             label: "Email",
@@ -59,7 +73,7 @@ class LoginScreen extends StatelessWidget {
             hintText: "Enter Password",
             fieldType: WidgetType.password,
             label: "Password",
-          ),
+          ),*/
 
           // check custom validation
          /* "temp": WidgetModel(

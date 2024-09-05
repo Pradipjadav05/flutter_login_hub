@@ -29,14 +29,14 @@ class FlutterLoginHub extends StatefulWidget {
   // text style for heading text
   TextStyle? headingStyle;
 
-  FlutterLoginHub({super.key,
-      required this.inputFields,
-      this.image,
-      this.actionButtonName = "", this.screenHeading = "",
-      this.addRememberMe = false,
-      this.actionButtonStyle,
-      this.headingStyle,
-      this.onProcess});
+  FlutterLoginHub({Key? key,
+    required this.inputFields,
+    this.image,
+    this.actionButtonName = "", this.screenHeading = "",
+    this.addRememberMe = false,
+    this.actionButtonStyle,
+    this.headingStyle,
+    this.onProcess}) : super(key: key);
 
   @override
   State<FlutterLoginHub> createState() => _FlutterLoginHubState();
@@ -73,37 +73,39 @@ class _FlutterLoginHubState extends State<FlutterLoginHub> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                // Display the appropriate title based on the form type (login or register).
-                if (widget.screenHeading!.isNotEmpty)
-                  Text(
-                    widget.screenHeading!,
-                    style: widget.headingStyle ?? Theme.of(context).textTheme.displaySmall,
-                  ),
+    return Scaffold(
+      body: Center(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  // Display the appropriate title based on the form type (login or register).
+                  if (widget.screenHeading!.isNotEmpty)
+                    Text(
+                      widget.screenHeading!,
+                      style: widget.headingStyle ?? Theme.of(context).textTheme.displaySmall,
+                    ),
 
-                const SizedBox(height: 40),
-                // Display logo image if provided.
-                if( widget.image != null)
-                 _buildImageFields(widget.image!),
+                  const SizedBox(height: 40),
+                  // Display logo image if provided.
+                  if( widget.image != null)
+                    _buildImageFields(widget.image!),
 
-                // Build input fields dynamically based on configuration.
-                _buildInputFields(),
+                  // Build input fields dynamically based on configuration.
+                  _buildInputFields(),
 
-                // Add a "Remember Me" checkbox if enabled.
-                _buildRememberMe(),
-                const SizedBox(height: 20),
-                // Submit button to trigger form validation and processing.
-                _buildSubmitButton(),
-              ],
+                  // Add a "Remember Me" checkbox if enabled.
+                  _buildRememberMe(),
+                  const SizedBox(height: 20),
+                  // Submit button to trigger form validation and processing.
+                  _buildSubmitButton(),
+                ],
+              ),
             ),
           ),
         ),
@@ -155,12 +157,17 @@ class _FlutterLoginHubState extends State<FlutterLoginHub> {
             maxLength: model.fieldType == WidgetType.mobile ? 10 : model.maxLength,
             // Show/hide password for password fields.
             obscureText: model.fieldType == WidgetType.password && !isVisiblePassword,
+            cursorColor: model.cursorColor,
             decoration: InputDecoration(
               isDense: true,
               border: model.border,
+              focusedBorder: model.focusBorder,
+              enabledBorder: model.enabledBorder,
+              disabledBorder: model.disabledBorder,
               hintText: model.hintText,
               labelText: model.label,
               counterText: "",
+              floatingLabelStyle: model.floatingLabelStyle,
               // Toggle visibility for password fields.
               suffix: _buildPasswordToggle(model),
             ),
@@ -244,21 +251,22 @@ class _FlutterLoginHubState extends State<FlutterLoginHub> {
     Map<String, dynamic> validatedData = {};
 
     // Validate input fields based on the field type and custom validator.
-    for (var entry in widget.inputFields.entries
-        .where((entry) => entry.value is WidgetModel)) {
+    for (var entry in widget.inputFields.entries.where((entry) => entry.value is WidgetModel)) {
       String key = entry.key;
       WidgetModel model = entry.value as WidgetModel;
       final value = _controllers[key]?.text ?? '';
 
       // If a custom validator is provided, use it for validation.
       if (model.validator != null) {
-        isValid = model.validator!(value);
+        bool res = model.validator!(value);
 
         // If the field is invalid, set focus on it and break out of the loop.
-        if (!isValid) {
+        if (!res) {
+          isValid = false;
           _focusNodes[key]?.requestFocus();
+          break;
         }
-        break;
+
       } else {
         // General validation for required fields and field type.
         // Validate empty fields and show a `SnackBar` with an error message.
@@ -384,9 +392,11 @@ class WidgetModel extends BaseModel {
 
   bool isEnable, readOnly;
 
-  TextStyle? hintStyle, textStyle;
+  TextStyle? hintStyle, textStyle, floatingLabelStyle;
 
   String obscuringCharacter;
+
+  Color? cursorColor;
 
   Function(String)? onChanged;
   Function(String)? onFieldSubmitted;
@@ -405,15 +415,17 @@ class WidgetModel extends BaseModel {
     this.maxLength,
     this.isEnable = true,
     this.readOnly = false,
+    this.cursorColor,
     this.hintStyle,
     this.textStyle,
+    this.floatingLabelStyle,
     this.obscuringCharacter = '•',
     this.onChanged,
     this.onFieldSubmitted,
     this.onTap,
     this.onEditingComplete,
-    required super.fieldType,
-  });
+    required WidgetType fieldType,
+  }): super(fieldType: fieldType);
 }
 
 /// Model class for image fields in the form.
