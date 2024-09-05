@@ -1,0 +1,49 @@
+name: flutter_login_hub
+description: "A Flutter Package with login/signup functionalities to help speed up development."
+version: 0.0.1
+homepage: https://github.com/Pradipjadav05/flutter_login_hub.git
+
+environment:
+  sdk: ^3.5.0
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
