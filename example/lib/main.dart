@@ -30,64 +30,49 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: FlutterLoginHub(
-        addRememberMe: false,
+        addRememberMe: true,
         screenHeading: "Register",
-        actionButtonName: "Register",
+        actionButtonName: "Login",
         headingStyle: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 34,
             color: Color.fromRGBO(182, 49, 51, 0.9),
         ),
-        image: ImageModel(imgPath:  "assets/login.png",),
+        image: ImageModel(imgPath:  "assets/login.png", ),
         inputFields: {
           "Username": WidgetModel(
             hintText: "Enter username",
-            fieldType: WidgetType.username,
             label: "Username",
-            validator: (value) {
-              if (value.isEmpty) {
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please enter Username')),);
-                return false;
-              }
-              return true;
-            },
+            // add error msg
+            errorMsg: "Enter Username",
           ),
+          // check custom validation
           "Mobile No.": WidgetModel(
             hintText: "Enter Mobile No.",
-            fieldType: WidgetType.mobile,
+            isNumberField: true,
             label: "Mobile",
-            validator: (value) {
-              if (value.isEmpty) {
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please enter Password')),);
-                return false;
-              }
-              return true;
-            },
+            errorMsg: "Enter Mobile",
+            maxLength: 10,
+            validator: (value){
+                if (!RegExp(r'^[0-9]+$').hasMatch(value) || value.length != 10) {
+                  return false;
+                }
+                return true;
+            }
           ),
-         /* "Email": WidgetModel(
+          "Email": WidgetModel(
             hintText: "Enter email",
-            fieldType: WidgetType.email,
+            errorMsg: "Enter email",
+            validationExp: RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'),
             label: "Email",
           ),
           "Password": WidgetModel(
             hintText: "Enter Password",
-            fieldType: WidgetType.password,
+            isObscureText: true,
+            showHidePassToggle: true,
+            isStrongPasswordRequired: true,
             label: "Password",
-          ),*/
-
-          // check custom validation
-         /* "temp": WidgetModel(
-            hintText: "Enter name",
-            fieldType: WidgetType.username,
-            label: "temp",
-            validator: (value) {
-              if (value.isEmpty) {
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please enter value')),);
-                return false;
-              }
-              return true;
-            },
-          ),*/
+          ),
         },
         actionButtonStyle: ElevatedButton.styleFrom(
           foregroundColor: Colors.white,
@@ -95,8 +80,8 @@ class LoginScreen extends StatelessWidget {
           shape: const RoundedRectangleBorder(),
           textStyle: const TextStyle(fontSize: 22.0,)
         ),
-        onProcess: (Map<String, dynamic> processData, {bool? isRemember}) {
-          if(isRemember != null && isRemember){
+        onProcess: (Map<String, dynamic> processData, {bool isRemember = false}) async{
+          if(isRemember){
             // Proceed with further processing like pref, etc.
           }
 
