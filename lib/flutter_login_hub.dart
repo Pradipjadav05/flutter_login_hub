@@ -235,16 +235,11 @@ class _FlutterLoginHubState extends State<FlutterLoginHub> {
                 children: [
                   // Display the appropriate title based on the form type (login or register).
                   if (widget.screenHeading!.isNotEmpty)
-                    Column(
-                      children: [
-                        Text(
-                          widget.screenHeading!,
-                          style: widget.headingStyle ?? Theme.of(context).textTheme.displaySmall,
-                        ),
-                        const SizedBox(height: 40),
-                      ],
+                    Text(
+                      widget.screenHeading!,
+                      style: widget.headingStyle ?? Theme.of(context).textTheme.displaySmall,
                     ),
-
+                  const SizedBox(height: 40),
                   // Display logo image if provided.
                   if(widget.image != null)
                     _buildImageFields(widget.image!),
@@ -269,7 +264,7 @@ class _FlutterLoginHubState extends State<FlutterLoginHub> {
   // Builds an optional logo image section based on the provided ImageModel.
   Widget _buildImageFields(ImageModel model) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16.0),
+      padding: const EdgeInsets.only(bottom: 24.0),
       child: Image.asset(
         model.imgPath.isEmpty ? "assets/login.png" : model.imgPath,
         height: model.height,

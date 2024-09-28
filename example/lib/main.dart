@@ -32,13 +32,13 @@ class LoginScreen extends StatelessWidget {
       body: FlutterLoginHub(
         addRememberMe: true,
         screenHeading: "Register",
-        actionButtonName: "Login",
+        actionButtonName: "Register",
         headingStyle: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 34,
-            color: Color.fromRGBO(182, 49, 51, 0.9),
+          fontWeight: FontWeight.bold,
+          fontSize: 34,
+          color: Color.fromRGBO(182, 49, 51, 0.9),
         ),
-        image: ImageModel(imgPath:  "assets/login.png", ),
+        image: ImageModel(imgPath:  "assets/login.png",),
         inputFields: {
           "Username": WidgetModel(
             hintText: "Enter username",
@@ -48,17 +48,17 @@ class LoginScreen extends StatelessWidget {
           ),
           // check custom validation
           "Mobile No.": WidgetModel(
-            hintText: "Enter Mobile No.",
-            isNumberField: true,
-            label: "Mobile",
-            errorMsg: "Enter Mobile",
-            maxLength: 10,
-            validator: (value){
+              hintText: "Enter Mobile No.",
+              isNumberField: true,
+              label: "Mobile",
+              errorMsg: "Enter Mobile",
+              maxLength: 10,
+              validator: (value){
                 if (!RegExp(r'^[0-9]+$').hasMatch(value) || value.length != 10) {
                   return false;
                 }
                 return true;
-            }
+              }
           ),
           "Email": WidgetModel(
             hintText: "Enter email",
@@ -75,10 +75,10 @@ class LoginScreen extends StatelessWidget {
           ),
         },
         actionButtonStyle: ElevatedButton.styleFrom(
-          foregroundColor: Colors.white,
-          backgroundColor: const Color.fromRGBO(182, 49, 51, 0.9),
-          shape: const RoundedRectangleBorder(),
-          textStyle: const TextStyle(fontSize: 22.0,)
+            foregroundColor: Colors.white,
+            backgroundColor: const Color.fromRGBO(182, 49, 51, 0.9),
+            shape: const RoundedRectangleBorder(),
+            textStyle: const TextStyle(fontSize: 22.0,)
         ),
         onProcess: (Map<String, dynamic> processData, {bool isRemember = false}) async{
           if(isRemember){
